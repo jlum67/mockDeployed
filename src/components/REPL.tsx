@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
+import mockedJson from "../modules/mockedJson";
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -16,10 +17,24 @@ export default function REPL() {
   // Add some kind of shared state that holds all the commands submitted.
   //const submittedCommands: string[] = [];
   const [submittedCommands, setSubmittedCommands] = useState<string[]>([]);
+  const file1 = mockedJson().file1;
 
   function addCommand(str: string) {
-    setSubmittedCommands([...submittedCommands, str]);
+    const newCommand = parseCommandLine(str);
+    setSubmittedCommands([...submittedCommands, newCommand]);
   }
+
+  const parseCommandLine = (str: string) => {
+    let newLine = "";
+    if (str.includes("load_file")) {
+      file1.data.body.forEach((stringArr: string[]) => {
+        stringArr.forEach((str: string) => {
+          newLine += str;
+        });
+      });
+    }
+    return newLine;
+  };
 
   return (
     <div className="repl">

@@ -16,7 +16,6 @@ export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
 
   // Build a handleSubmit function called in button onClick
-
   function handleSubmit() {
     addCommand(commandString);
     setCommandString("");

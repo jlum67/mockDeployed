@@ -13,7 +13,7 @@ import { REPLInput } from "./REPLInput";
 */
 
 export default function REPL() {
-  // TODO: Add some kind of shared state that holds all the commands submitted.
+  // Add some kind of shared state that holds all the commands submitted.
   //const submittedCommands: string[] = [];
   const [submittedCommands, setSubmittedCommands] = useState<string[]>([]);
 
@@ -25,7 +25,7 @@ export default function REPL() {
     <div className="repl">
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
-      {/* TODO: Update your REPLHistory and REPLInput to take in new shared state as props */}
+      {/* Update your REPLHistory and REPLInput to take in new shared state as props */}
       <REPLHistory submittedCommands={submittedCommands} />
       <hr></hr>
       <REPLInput addCommand={addCommand} />

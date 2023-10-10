@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
 
 interface REPLInputProps {
-  // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
+  // Fill this with desired props... Maybe something to keep track of the submitted commands
   addCommand: (str: string) => void;
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
@@ -14,16 +14,15 @@ export function REPLInput(props: REPLInputProps) {
 
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  const [count, setCount] = useState<number>(0);
 
-  // TODO WITH TA: build a handleSubmit function called in button onClick
+  // Build a handleSubmit function called in button onClick
 
   function handleSubmit() {
-    setCount(count + 1);
     addCommand(commandString);
+    setCommandString("");
   }
 
-  // TODO: Once it increments, try to make it push commands... Note that you can use the `...` spread syntax to copy what was there before
+  // Once it increments, try to make it push commands... Note that you can use the `...` spread syntax to copy what was there before
   // add to it with new commands.
   /**
    * We suggest breaking down this component into smaller components, think about the individual pieces
@@ -43,9 +42,9 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
-      {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-      <button onClick={handleSubmit}>Submit {count}</button>
+      {/* Build a handleSubmit function that increments count and displays the text in the button */}
+      {/* Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 }

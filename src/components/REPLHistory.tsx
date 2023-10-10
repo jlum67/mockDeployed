@@ -1,7 +1,7 @@
 import "../styles/main.css";
 
 interface REPLHistoryProps {
-  // TODO: Fill with some shared state tracking all the pushed commands
+  // Fill with some shared state tracking all the pushed commands
   submittedCommands: string[];
 }
 export function REPLHistory(props: REPLHistoryProps) {

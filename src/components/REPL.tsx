@@ -17,19 +17,29 @@ export default function REPL() {
   // Add some kind of shared state that holds all the commands submitted.
   //const submittedCommands: string[] = [];
   const [submittedCommands, setSubmittedCommands] = useState<JSX.Element[]>([]);
-  const [submittedInputs, setSubmittedInputs] = useState<string[]>([]);
+  //const [submittedInputs, setSubmittedInputs] = useState<string[]>([]);
+  const [submittedInputs, setSubmittedInputs] = useState<
+    {
+      input: string;
+      output: JSX.Element;
+    }[]
+  >([]);
   const [mode, setMode] = useState<string>("Brief");
   const file1 = mockedJson().file1;
 
   function addCommand(str: string) {
     const newCommand = parseCommandLine(str);
-    setSubmittedInputs([...submittedInputs, str]);
+    //setSubmittedInputs([...submittedInputs, str]);
+    setSubmittedInputs([
+      ...submittedInputs,
+      { input: str, output: newCommand },
+    ]);
     setSubmittedCommands([...submittedCommands, newCommand]);
   }
 
   const parseCommandLine = (str: string) => {
     const newCommands: JSX.Element[] = [];
-    if (str.includes("load_file")) {
+    if (str === "view") {
       const body: string[] = [];
       file1.data.body.forEach((stringArr: string[]) => {
         let tempStr = "";

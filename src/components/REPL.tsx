@@ -40,7 +40,11 @@ export default function REPL() {
 
   const parseCommandLine = (str: string) => {
     const newCommands: JSX.Element[] = []; //list of type JSX.Element
-    if (str === "view") {
+    const splitInput = str.split(" ");
+    const inputLength = splitInput.length;
+    const usage = splitInput[0];
+
+    if (usage === "view") {
       const body: string[] = [];
       file1.data.body.forEach((stringArr: string[]) => { //looping through list of lists
         let tempStr = "";
@@ -54,18 +58,20 @@ export default function REPL() {
       body.forEach((str: string) => {
         newCommands.push(<div>{str}</div>);
       });
-    }
-
-    const splitInput = str.split(' ');
-    const inputLength = splitInput.length;
-    const usage = splitInput[0]
-
-    if (usage === "search") {
-      const props: SearchProps = {
-        splitInput: splitInput,
-        inputLength: inputLength,
-      };
-      newCommands.push(searchCSV(props))
+    } else if (usage === "search") {
+      if (inputLength > 3 || inputLength == 1 ) {
+        newCommands.push(<div>Improper arguments used.</div>);
+      } else {
+        const props: SearchProps = {
+          splitInput: splitInput,
+          inputLength: inputLength,
+        };
+        newCommands.push(searchCSV(props));
+      }
+    } else if (usage == "load") { //TODO: we have to check if load is called before allowing view to be called 
+      console.log("TODO: load");
+    } else {
+      newCommands.push(<div>Unknown command was input.</div>)
     }
 
 

@@ -41,6 +41,7 @@ export default function mockedJson() {
           ],
           ["RI", "Multiracial", " $971.89 ", "8883.049171", " $0.92 ", "2%"],
           ["DE", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%", "White"],
+          ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
         ],
       },
     },

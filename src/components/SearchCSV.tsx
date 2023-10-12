@@ -7,7 +7,7 @@ export interface SearchProps {
 
 export function searchCSV(props: SearchProps) {
 
-    const noNameOrIndex = [
+    const noNameOrIndex = [ //getter or setter or something 
       ["RI", "Hispanic/Latino", " $673.14 ", "74596.18851", " $0.64 ", "14%"],
       ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
     ];
@@ -22,7 +22,7 @@ export function searchCSV(props: SearchProps) {
 
     let searchOutput: string[][] = [];
 
-    //TODO: account for if only search and nothing else is input
+    //TODO: check that search inputs such as column name and index are correct, otherwise output could not be found or something
     if (props.inputLength === 2) { //no column name or index provided
         searchOutput = noNameOrIndex;
     } else {

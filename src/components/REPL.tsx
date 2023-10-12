@@ -3,6 +3,7 @@ import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import mockedJson from "../modules/mockedJson";
+import { searchCSV, SearchProps } from "./SearchCSV";
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -38,10 +39,10 @@ export default function REPL() {
   }
 
   const parseCommandLine = (str: string) => {
-    const newCommands: JSX.Element[] = [];
+    const newCommands: JSX.Element[] = []; //list of type JSX.Element
     if (str === "view") {
       const body: string[] = [];
-      file1.data.body.forEach((stringArr: string[]) => {
+      file1.data.body.forEach((stringArr: string[]) => { //looping through list of lists
         let tempStr = "";
         stringArr.forEach((str: string) => {
           tempStr += str + ", ";
@@ -54,6 +55,19 @@ export default function REPL() {
         newCommands.push(<div>{str}</div>);
       });
     }
+
+    const splitInput = str.split(' ');
+    const inputLength = splitInput.length;
+    const usage = splitInput[0]
+
+    if (usage === "search") {
+      const props: SearchProps = {
+        splitInput: splitInput,
+        inputLength: inputLength,
+      };
+      newCommands.push(searchCSV(props))
+    }
+
 
     return <div>{newCommands}</div>;
   };

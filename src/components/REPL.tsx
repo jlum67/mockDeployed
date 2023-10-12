@@ -45,19 +45,25 @@ export default function REPL() {
     const usage = splitInput[0];
 
     if (usage === "view") {
-      const body: string[] = [];
-      file1.data.body.forEach((stringArr: string[]) => { //looping through list of lists
-        let tempStr = "";
-        stringArr.forEach((str: string) => {
-          tempStr += str + ", ";
+      if (inputLength > 1) {
+        newCommands.push(<div>Improper arguments used.</div>);
+      } else {
+        const body: string[] = [];
+        file1.data.body.forEach((stringArr: string[]) => {
+          //looping through list of lists
+          let tempStr = "";
+          stringArr.forEach((str: string) => {
+            tempStr += str + ", ";
+          });
+          body.push(tempStr.substring(0, tempStr.length - 2));
+          tempStr = "";
         });
-        body.push(tempStr.substring(0, tempStr.length - 2));
-        tempStr = "";
-      });
 
-      body.forEach((str: string) => {
-        newCommands.push(<div>{str}</div>);
-      });
+        body.forEach((str: string) => {
+          newCommands.push(<div>{str}</div>);
+        });
+      }
+
     } else if (usage === "search") {
       if (inputLength > 3 || inputLength == 1 ) {
         newCommands.push(<div>Improper arguments used.</div>);

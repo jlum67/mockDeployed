@@ -22,6 +22,7 @@ export function searchCSV(props: SearchProps) {
 
     let searchOutput: string[][] = [];
 
+    //TODO: account for if only search and nothing else is input
     if (props.inputLength === 2) { //no column name or index provided
         searchOutput = noNameOrIndex;
     } else {

@@ -1,6 +1,11 @@
-import React from "react";
-
+/**
+ * Holds all the files that we're using for our mock, similar to the way they
+ * were formatted for Server
+ * @param fileName
+ * @returns
+ */
 export default function mockedJson(fileName: string) {
+  // normal file with headers
   if (fileName === "file1") {
     return {
       data: {
@@ -45,6 +50,7 @@ export default function mockedJson(fileName: string) {
         ],
       },
     };
+    // normal file without headers
   } else if (fileName === "file1noheaders") {
     return {
       data: {
@@ -82,6 +88,7 @@ export default function mockedJson(fileName: string) {
         ],
       },
     };
+    // file with only one column
   } else if (fileName === "oneCol") {
     return {
       data: {
@@ -96,6 +103,7 @@ export default function mockedJson(fileName: string) {
         ],
       },
     };
+    // file with only one row
   } else if (fileName === "oneRow") {
     return {
       data: {
@@ -105,6 +113,7 @@ export default function mockedJson(fileName: string) {
         ],
       },
     };
+    // file with only one cell
   } else if (fileName === "oneItem") {
     return {
       data: {
@@ -112,6 +121,7 @@ export default function mockedJson(fileName: string) {
         body: [["herro"]],
       },
     };
+    // empty file
   } else if (fileName === "empty") {
     return {
       data: {
@@ -121,6 +131,7 @@ export default function mockedJson(fileName: string) {
     };
   }
 
+  // if none of the file names match
   return {
     data: {
       headers: [],

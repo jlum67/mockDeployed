@@ -45,13 +45,23 @@ button {
 }
 
 .command {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+}
+
+.output-header {
+  margin-top: 0.5em;
+  font-weight: bold;
+}
+
+.command-header {
+  font-weight: bold;
 }
 
 table {
   margin: auto;
   border-collapse: collapse;
   border-spacing: 0;
+  margin-top: 1em;
 }
 
 .table-headers td {
@@ -61,6 +71,7 @@ table {
 
 table td {
   padding: 1em;
+  border: solid 1px black;
 }
 
 .custom-cell {

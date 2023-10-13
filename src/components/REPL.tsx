@@ -2,7 +2,6 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
-import mockedJson from "../modules/mockedJson";
 import { searchCSV, SearchProps } from "./search/SearchCSV";
 import { loadCSV, LoadProps } from "./load/LoadCSV";
 import { viewCSV, ViewProps } from "./view/ViewCSV";
@@ -18,9 +17,7 @@ import { viewCSV, ViewProps } from "./view/ViewCSV";
 
 export default function REPL() {
   // Add some kind of shared state that holds all the commands submitted.
-  //const submittedCommands: string[] = [];
   const [submittedCommands, setSubmittedCommands] = useState<JSX.Element[]>([]);
-  //const [submittedInputs, setSubmittedInputs] = useState<string[]>([]);
   const [fileLoaded, setFileLoaded] = useState<boolean>(false);
   const [currentFile, setCurrentFile] = useState<{
     data: {
@@ -36,6 +33,10 @@ export default function REPL() {
   >([]);
   const [mode, setMode] = useState<string>("Brief");
 
+  /**
+   * Pushes a new command to the REPL history
+   * @param str - the command to be pushed
+   */
   function addCommand(str: string) {
     const newCommand = parseCommandLine(str);
     //setSubmittedInputs([...submittedInputs, str]);
@@ -46,6 +47,11 @@ export default function REPL() {
     setSubmittedCommands([...submittedCommands, newCommand]);
   }
 
+  /**
+   * Parses the inputted command line
+   * @param str - the inputted command
+   * @returns - a div with the output of the command to be pass
+   */
   const parseCommandLine = (str: string) => {
     const newCommands: JSX.Element[] = []; //list of type JSX.Element
     const splitInput = str.split(" ");
@@ -53,6 +59,7 @@ export default function REPL() {
     const usage = splitInput[0];
 
     if (usage === "view") {
+      // handles calls to view csv
       if (inputLength > 1) {
         newCommands.push(<div>Improper arguments used.</div>);
       } else if (!fileLoaded) {
@@ -61,11 +68,10 @@ export default function REPL() {
         const props: ViewProps = {
           currentFile: currentFile,
         };
-        newCommands.push(
-          viewCSV(props)
-        );
+        newCommands.push(viewCSV(props));
       }
     } else if (usage === "search") {
+      // handles calls to search csv
       if (inputLength > 3 || inputLength == 1) {
         newCommands.push(<div>Improper arguments used.</div>);
       } else if (!fileLoaded) {
@@ -78,6 +84,7 @@ export default function REPL() {
         newCommands.push(searchCSV(props));
       }
     } else if (usage == "load_file") {
+      // handles calls to load csv
       const props: LoadProps = {
         fileName: splitInput[1],
         setCurrentFile: setCurrentFile,
@@ -85,12 +92,17 @@ export default function REPL() {
       };
       newCommands.push(loadCSV(props));
     } else {
+      // handles cases that aren't any of the above three
       newCommands.push(<div>Unknown command was inputted.</div>);
     }
 
     return <div>{newCommands}</div>;
   };
 
+  /**
+   * Handles whenever a user clicks the Mode button to change the mode between
+   * Brief and Verbose
+   */
   function handleMode() {
     if (mode === "Brief") {
       setMode("Verbose");

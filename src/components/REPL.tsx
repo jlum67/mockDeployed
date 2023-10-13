@@ -57,6 +57,7 @@ export default function REPL() {
         newCommands.push(<div>No file loaded.</div>);
       } else {
         const body: string[] = [];
+        const newTable: JSX.Element[] = [];
         currentFile &&
           currentFile.data.body.forEach((stringArr: string[]) => {
             //looping through list of lists
@@ -69,7 +70,7 @@ export default function REPL() {
           });
 
         body.forEach((str: string) => {
-          newCommands.push(<div>{str}</div>);
+          newCommands.push(<tr>{str}</tr>);
         });
       }
     } else if (usage === "search") {

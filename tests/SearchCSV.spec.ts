@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import mockedJson from "../src/modules/mockedJson";
 
-
 /**
   The general shapes of tests in Playwright Test are:
     1. Navigate to a URL
@@ -23,7 +22,7 @@ test("too many arguments input for search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi hi hi");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Improper arguments used.")).toBeVisible;
+  await expect(page.getByText("Improper arguments used.")).toBeVisible();
 });
 
 /**
@@ -33,7 +32,7 @@ test("too few arguments input for search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Improper arguments used.")).toBeVisible;
+  await expect(page.getByText("Improper arguments used.")).toBeVisible();
 });
 
 /**
@@ -43,7 +42,7 @@ test("load not used before calling search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi hi");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("No file loaded.")).toBeVisible;
+  await expect(page.getByText("No file loaded.")).toBeVisible();
 });
 
 /**
@@ -58,17 +57,25 @@ test("searching with no column name or index input", async ({ page }) => {
   await page.getByLabel("Command input").fill("search hispanic");
   await page.getByRole("button", { name: "Submit" }).click();
 
-    const rowValues: string[] = [
-      "RI",
-      "Hispanic/Latino",
-      "$673.14",
-      "74596.18851",
-      "$0.64",
-      "14%",
-    ];
+  const rowValues: string[] = [
+    "RI",
+    "Hispanic/Latino",
+    "$673.14",
+    "74596.18851",
+    "$0.64",
+    "14%",
+  ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   const rowValues2: string[] = [
@@ -81,7 +88,15 @@ test("searching with no column name or index input", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues2.length; i++) {
-    await expect(page.getByText(rowValues2[i])).toBeVisible;
+    const elt = page.getByText(rowValues2[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 });
 
@@ -107,7 +122,15 @@ test("searching with column name provided", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 });
 
@@ -155,7 +178,15 @@ test("load once, search multiple times", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   await page.getByLabel("Command input").click();
@@ -172,7 +203,15 @@ test("load once, search multiple times", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues2.length; i++) {
-    await expect(page.getByText(rowValues2[i])).toBeVisible;
+    const elt = page.getByText(rowValues2[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   await page.getByLabel("Command input").click();
@@ -189,7 +228,15 @@ test("load once, search multiple times", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues3.length; i++) {
-    await expect(page.getByText(rowValues3[i])).toBeVisible;
+    const elt = page.getByText(rowValues3[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   const rowValues4: string[] = [
@@ -202,7 +249,15 @@ test("load once, search multiple times", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues4.length; i++) {
-    await expect(page.getByText(rowValues4[i])).toBeVisible;
+    const elt = page.getByText(rowValues4[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 });
 
@@ -220,14 +275,17 @@ test("searching valid inputs but nothing found - column and index not provided",
   await page.getByLabel("Command input").fill("search jeremy");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found."))
-    .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
  * Tests when search is called with valid input (column name provided) but value to find does not exist.
  */
-test("searching valid inputs but nothing found - column name", async ({ page }) => {
+test("searching valid inputs but nothing found - column name", async ({
+  page,
+}) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -236,8 +294,9 @@ test("searching valid inputs but nothing found - column name", async ({ page }) 
   await page.getByLabel("Command input").fill("search state jeremy");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found.")).toBeVisible;
-  
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
@@ -254,16 +313,15 @@ test("searching valid inputs but nothing found - column index", async ({
   await page.getByLabel("Command input").fill("search 2 jeremy");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found."))
-    .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
  * Tests when load is called and search results update properly.
  */
-test("change load, see if search updates properly", async ({
-  page,
-}) => {
+test("change load, see if search updates properly", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1noheaders");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -276,7 +334,7 @@ test("change load, see if search updates properly", async ({
   await page.getByLabel("Command input").fill("search herro");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("herro")).toBeVisible;
+  await expect(page.getByText("herro")).toBeVisible();
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -296,16 +354,22 @@ test("change load, see if search updates properly", async ({
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 });
 
 /**
  * Tests when search is called on empty file.
  */
-test("searching empty file", async ({
-  page,
-}) => {
+test("searching empty file", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file empty");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -314,8 +378,9 @@ test("searching empty file", async ({
   await page.getByLabel("Command input").fill("search jeremy");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found."))
-    .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
@@ -330,13 +395,14 @@ test("searching one item table and search multiple times", async ({ page }) => {
   await page.getByLabel("Command input").fill("search herro");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("herro")).toBeVisible;
+  await expect(page.getByText("herro")).toBeVisible();
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search jeremy");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Search request could not be found."))
-      .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
@@ -351,15 +417,15 @@ test("searching one col file", async ({ page }) => {
   await page.getByLabel("Command input").fill("search white");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("white"))
-    .toBeVisible;
+  await expect(page.getByText("white")).toBeVisible();
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search jerm");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found."))
-    .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
@@ -384,22 +450,30 @@ test("searching one row file", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  await expect(page.getByText("Search request could not be found."))
-    .toBeVisible;
+  await expect(
+    page.getByText("Search request could not be found.")
+  ).toBeVisible();
 });
 
 /**
  * Tests that load, view, and search interact properly.
  */
 test("testing load, search, view interactions", async ({ page }) => {
-
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -444,19 +518,60 @@ test("testing load, search, view interactions", async ({ page }) => {
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1noheaders");
   await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search white");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues2: string[] = [
+    "WA",
+    "White",
+    '" $1,058.47 "',
+    "395773.6521",
+    " $1.00 ",
+    "75%",
+    "DE",
+    '" $1,058.47 "',
+    "395773.6521",
+    " $1.00 ",
+    "75%",
+    "White",
+  ];
+
+  for (let i = 0; i < rowValues2.length; i++) {
+    const elt = page.getByText(rowValues2[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
+  }
 });
 
 /**
  * Tests that verbosity works properly (brief mode is used in other testing).
  */
-test("testing verbosity (brief is used in all other tests)", async ({ page }) => {
+test("testing verbosity (brief is used in all other tests)", async ({
+  page,
+}) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -475,10 +590,20 @@ test("testing verbosity (brief is used in all other tests)", async ({ page }) =>
   ];
 
   for (let i = 0; i < rowValues.length; i++) {
-    await expect(page.getByText(rowValues[i])).toBeVisible;
+    const elt = page.getByText(rowValues[i], { exact: true });
+    const count = await elt.count();
+    if (count > 1) {
+      for (let l = 0; l < count; l++) {
+        await expect(elt.nth(l)).toBeVisible();
+      }
+    } else {
+      await expect(elt).toBeVisible();
+    }
   }
 
   await page.getByLabel("Mode", { exact: true }).click();
-  await expect(page.getByText("output")).toBeVisible;
-  await expect(page.getByText("command")).toBeVisible;
+  await expect(page.getByText("output").nth(0)).toBeVisible();
+  await expect(page.getByText("command").nth(1)).toBeVisible();
+  await expect(page.getByText("output").nth(0)).toBeVisible();
+  await expect(page.getByText("command").nth(1)).toBeVisible();
 });

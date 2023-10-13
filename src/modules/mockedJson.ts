@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function mockedJson() {
-  return {
-    file1: {
+export default function mockedJson(fileName: string) {
+  if (fileName === "file1") {
+    return {
       data: {
         headers: [
           "State",
@@ -44,6 +44,13 @@ export default function mockedJson() {
           ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
         ],
       },
+    };
+  }
+
+  return {
+    data: {
+      headers: [],
+      body: [],
     },
   };
 }

@@ -563,3 +563,230 @@ test("on verbose mode, I get an error when I try to view a file without loading 
     page.getByText("No file loaded.", { exact: true })
   ).toBeVisible();
 });
+
+/**
+ * Tests that we can make consecutive calls to load and view on brief mode
+ */
+test("on brief mode, we can make consecutive calls to load", async ({
+  page,
+}) => {
+  // First file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const headers = mockedJson("file1").data.headers;
+  const body = mockedJson("file1").data.body;
+
+  for (let i = 0; i < headers.length; i++) {
+    await expect(page.getByText(headers[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body.length; j++) {
+    for (let k = 0; k < body[j].length; k++) {
+      const elt = page.getByText(body[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+
+  // Second file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const headers2 = mockedJson("file1noheaders").data.headers;
+  const body2 = mockedJson("file1noheaders").data.body;
+
+  for (let i = 0; i < headers2.length; i++) {
+    await expect(page.getByText(headers2[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body2.length; j++) {
+    for (let k = 0; k < body2[j].length; k++) {
+      const elt = page.getByText(body2[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+
+  // Third file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const headers3 = mockedJson("oneItem").data.headers;
+  const body3 = mockedJson("oneItem").data.body;
+
+  for (let i = 0; i < headers3.length; i++) {
+    await expect(page.getByText(headers3[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body3.length; j++) {
+    for (let k = 0; k < body3[j].length; k++) {
+      const elt = page.getByText(body[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+});
+
+/**
+ * Tests that we can make consecutive calls to load and view on verbose mode
+ */
+test("on verbose mode, we can make consecutive calls to load", async ({
+  page,
+}) => {
+  await page.getByLabel("Mode", { exact: true }).click();
+
+  // First file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(0)).toBeVisible();
+  await expect(page.getByText("load_file file1")).toBeVisible();
+  await expect(page.getByText("Output:").nth(0)).toBeVisible();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Command:").nth(1)).toBeVisible();
+  await expect(page.getByText("view").nth(0)).toBeVisible();
+  await expect(page.getByText("Output:").nth(1)).toBeVisible();
+
+  const headers = mockedJson("file1").data.headers;
+  const body = mockedJson("file1").data.body;
+
+  for (let i = 0; i < headers.length; i++) {
+    await expect(page.getByText(headers[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body.length; j++) {
+    for (let k = 0; k < body[j].length; k++) {
+      const elt = page.getByText(body[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+
+  // Second file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(2)).toBeVisible();
+  await expect(page.getByText("load_file file1noheaders")).toBeVisible();
+  await expect(page.getByText("Output:").nth(2)).toBeVisible();
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Command:").nth(3)).toBeVisible();
+  await expect(page.getByText("view").nth(1)).toBeVisible();
+  await expect(page.getByText("Output:").nth(3)).toBeVisible();
+
+  const headers2 = mockedJson("file1noheaders").data.headers;
+  const body2 = mockedJson("file1noheaders").data.body;
+
+  for (let i = 0; i < headers2.length; i++) {
+    await expect(page.getByText(headers2[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body2.length; j++) {
+    for (let k = 0; k < body2[j].length; k++) {
+      const elt = page.getByText(body2[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+
+  // Third file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(4)).toBeVisible();
+  await expect(page.getByText("load_file oneItem")).toBeVisible();
+  await expect(page.getByText("Output:").nth(4)).toBeVisible();
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Command:").nth(5)).toBeVisible();
+  await expect(page.getByText("view").nth(2)).toBeVisible();
+  await expect(page.getByText("Output:").nth(5)).toBeVisible();
+
+  const headers3 = mockedJson("oneItem").data.headers;
+  const body3 = mockedJson("oneItem").data.body;
+
+  for (let i = 0; i < headers3.length; i++) {
+    await expect(page.getByText(headers3[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body3.length; j++) {
+    for (let k = 0; k < body3[j].length; k++) {
+      const elt = page.getByText(body3[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+});

@@ -31,18 +31,5 @@ export function REPLHistory(props: REPLHistoryProps) {
     }
   );
 
-  // const hist = submittedCommands.map((value: JSX.Element) => {
-  //   if (mode === "Verbose") {
-  //     return (
-  //       <div key={value.key}>
-  //         <div>{submittedInputs[value]}</div>{" "}
-  //         {/* TODO: fix to just be for the corresponding input*/}
-  //         <div>{value}</div>
-  //       </div>
-  //     );
-  //   }
-  //   return <div key={value.key}>{value}</div>;
-  // };
-
   return <div className="repl-history">{hist}</div>;
 }

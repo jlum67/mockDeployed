@@ -3,11 +3,9 @@ import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import mockedJson from "../modules/mockedJson";
-import { searchCSV, SearchProps } from "./SearchCSV";
-import { loadCSV, LoadProps } from "./LoadCSV";
-import { viewCSV, ViewProps } from "./viewCSV";
-
-
+import { searchCSV, SearchProps } from "./search/SearchCSV";
+import { loadCSV, LoadProps } from "./load/LoadCSV";
+import { viewCSV, ViewProps } from "./view/ViewCSV";
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -60,9 +58,8 @@ export default function REPL() {
       } else if (!fileLoaded) {
         newCommands.push(<div>No file loaded.</div>);
       } else {
-
         const props: ViewProps = {
-          currentFile: currentFile
+          currentFile: currentFile,
         };
 
         newCommands.push(

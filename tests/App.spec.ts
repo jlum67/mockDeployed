@@ -9,9 +9,9 @@ import { test, expect } from "@playwright/test";
  */
 
 // If you needed to do something before every test case...
-test.beforeEach(() => {
+test.beforeEach(async ({ page }) => {
   // ... you'd put it here.
-  // TODO: Is there something we need to do before every test case to avoid repeating code?
+  await page.goto("http://localhost:8000/");
 });
 
 /**
@@ -41,25 +41,20 @@ test("after I type into the input box, its text changes", async ({ page }) => {
   await expect(page.getByLabel("Command input")).toHaveValue(mock_input);
 });
 
-test("on page load, i see a button", async ({ page }) => {
-  // TODO WITH TA: Fill this in!
+/**
+ * Don't worry about the "async" yet. We'll cover it in more detail
+ * for the next sprint. For now, just think about "await" as something
+ * you put before parts of your test that might take time to run,
+ * like any interaction with the page.
+ */
+test("on page load, i see a header", async ({ page }) => {
+  // Notice: http, not https! Our front-end is not set up for HTTPs.
+  await expect(page.getByLabel("Command input")).toBeVisible();
+  await expect(page.getByRole("heading")).toBeVisible();
+  await expect(page.getByRole("heading")).toBeVisible();
 });
 
-test("after I click the button, its label increments", async ({ page }) => {
-  // TODO WITH TA: Fill this in to test your button counter functionality!
-  await page.goto("http://localhost:8000/");
-  await expect(
-    page.getByRole("button", { name: "Submitted 0 times" })
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Submitted 0 times" }).click();
-  await page.getByRole("button", { name: "Submitted 0 times" }).click();
-  await page.getByRole("button", { name: "Submitted 0 times" }).click();
-  await page.getByRole("button", { name: "Submitted 0 times" }).click();
-  await expect(
-    page.getByRole("button", { name: "Submitted 4 times" })
-  ).toBeVisible();
-});
-
-test("after I click the button, my command gets pushed", async ({ page }) => {
-  // TODO: Fill this in to test your button push functionality!
+test("on page load, I see the mode is set to 'brief'", async ({ page }) => {
+  await expect(page.getByLabel("Mode-Header")).toBeVisible;
+  await expect(page.getByLabel("Mode")).toContainText(["Brief"]);
 });

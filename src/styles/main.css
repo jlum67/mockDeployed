@@ -59,7 +59,11 @@ table {
   padding: 1em;
 }
 
+table td {
+  padding: 1em;
+}
+
 .custom-cell {
-  border: 1px solid white; 
-  padding: 8px; 
+  border: 1px solid white;
+  padding: 8px;
 }

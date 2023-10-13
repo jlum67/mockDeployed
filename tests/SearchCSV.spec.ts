@@ -16,7 +16,9 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:8000/");
 });
 
-//improper argument, no file loaded, different search combos, different modes, search could not be found
+/**
+ * Tests for proper output when too many arguments used for search.
+ */
 test("too many arguments input for search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi hi hi");
@@ -24,6 +26,9 @@ test("too many arguments input for search", async ({ page }) => {
   await expect(page.getByText("Improper arguments used.")).toBeVisible;
 });
 
+/**
+ * Tests for proper output when too few arguments used for search.
+ */
 test("too few arguments input for search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search");
@@ -31,6 +36,9 @@ test("too few arguments input for search", async ({ page }) => {
   await expect(page.getByText("Improper arguments used.")).toBeVisible;
 });
 
+/**
+ * Tests when search is called before load.
+ */
 test("load not used before calling search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi hi");
@@ -38,6 +46,9 @@ test("load not used before calling search", async ({ page }) => {
   await expect(page.getByText("No file loaded.")).toBeVisible;
 });
 
+/**
+ * Tests when search is called with no column name/index specified.
+ */
 test("searching with no column name or index input", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -74,6 +85,9 @@ test("searching with no column name or index input", async ({ page }) => {
   }
 });
 
+/**
+ * Tests when search is called with column name specified.
+ */
 test("searching with column name provided", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -97,6 +111,9 @@ test("searching with column name provided", async ({ page }) => {
   }
 });
 
+/**
+ * Tests when search is called with column index specified.
+ */
 test("searching with column index provided", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -116,6 +133,9 @@ test("searching with column index provided", async ({ page }) => {
   ];
 });
 
+/**
+ * Tests when search is called multiple times after loading.
+ */
 test("load once, search multiple times", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -184,10 +204,11 @@ test("load once, search multiple times", async ({ page }) => {
   for (let i = 0; i < rowValues4.length; i++) {
     await expect(page.getByText(rowValues4[i])).toBeVisible;
   }
-
-
 });
 
+/**
+ * Tests when search is called with valid input (no column name or index provided) but value to find does not exist.
+ */
 test("searching valid inputs but nothing found - column and index not provided", async ({
   page,
 }) => {
@@ -203,6 +224,9 @@ test("searching valid inputs but nothing found - column and index not provided",
     .toBeVisible;
 });
 
+/**
+ * Tests when search is called with valid input (column name provided) but value to find does not exist.
+ */
 test("searching valid inputs but nothing found - column name", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
@@ -216,6 +240,9 @@ test("searching valid inputs but nothing found - column name", async ({ page }) 
   
 });
 
+/**
+ * Tests when search is called with valid input (column index provided) but value to find does not exist.
+ */
 test("searching valid inputs but nothing found - column index", async ({
   page,
 }) => {
@@ -231,6 +258,9 @@ test("searching valid inputs but nothing found - column index", async ({
     .toBeVisible;
 });
 
+/**
+ * Tests when load is called and search results update properly.
+ */
 test("change load, see if search updates properly", async ({
   page,
 }) => {
@@ -270,6 +300,9 @@ test("change load, see if search updates properly", async ({
   }
 });
 
+/**
+ * Tests when search is called on empty file.
+ */
 test("searching empty file", async ({
   page,
 }) => {
@@ -285,6 +318,9 @@ test("searching empty file", async ({
     .toBeVisible;
 });
 
+/**
+ * Tests when search is called on one item table. Also tests successive searching.
+ */
 test("searching one item table and search multiple times", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneItem");
@@ -303,6 +339,9 @@ test("searching one item table and search multiple times", async ({ page }) => {
       .toBeVisible;
 });
 
+/**
+ * Tests when search is called on one column table.
+ */
 test("searching one col file", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneCol");
@@ -323,6 +362,9 @@ test("searching one col file", async ({ page }) => {
     .toBeVisible;
 });
 
+/**
+ * Tests when search is called on one row table.
+ */
 test("searching one row file", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneRow");
@@ -353,6 +395,9 @@ test("searching one row file", async ({ page }) => {
     .toBeVisible;
 });
 
+/**
+ * Tests that load, view, and search interact properly.
+ */
 test("testing load, search, view interactions", async ({ page }) => {
 
   await page.getByLabel("Command input").click();
@@ -408,6 +453,9 @@ test("testing load, search, view interactions", async ({ page }) => {
   await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
 });
 
+/**
+ * Tests that verbosity works properly (brief mode is used in other testing).
+ */
 test("testing verbosity (brief is used in all other tests)", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");

@@ -14,13 +14,21 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:8000/");
 });
 
+/**
+ * Tests that we can change the mode between verbose and brief on brief mode
+ */
 test("on clicking the mode, I can change it to 'verbose'", async ({ page }) => {
   await expect(page.getByLabel("Mode-Header")).toBeVisible();
   await expect(page.getByLabel("Mode")).toContainText(["Brief"]);
   await page.getByLabel("Mode", { exact: true }).click();
   await expect(page.getByLabel("Mode")).toContainText(["Verbose"]);
+  await page.getByLabel("Mode", { exact: true }).click();
+  await expect(page.getByLabel("Mode")).toContainText(["Brief"]);
 });
 
+/**
+ * Tests that we get an error with empty commands on brief mode
+ */
 test("on brief mode, I get an error with an undefined command", async ({
   page,
 }) => {
@@ -29,6 +37,9 @@ test("on brief mode, I get an error with an undefined command", async ({
   await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
 });
 
+/**
+ * Tests that we can load a file on brief mode
+ */
 test("on brief mode, I get a success message when loading a file", async ({
   page,
 }) => {
@@ -38,6 +49,9 @@ test("on brief mode, I get a success message when loading a file", async ({
   await expect(page.getByText("file1 successfully loaded!")).toBeVisible;
 });
 
+/**
+ * Tests that we get an error when loading invalid files on brief mode
+ */
 test("on brief mode, I get an error when loading an invalid file", async ({
   page,
 }) => {
@@ -47,6 +61,9 @@ test("on brief mode, I get an error when loading an invalid file", async ({
   await expect(page.getByText("Failed to load file.")).toBeVisible;
 });
 
+/**
+ * Tests that we get an error message for invalid commands on brief mode
+ */
 test("on brief mode, I get an error message when inputting an incorrect command", async ({
   page,
 }) => {
@@ -56,6 +73,9 @@ test("on brief mode, I get an error message when inputting an incorrect command"
   await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
 });
 
+/**
+ * Tests that we get an error with empty commands on verbose mode
+ */
 test("on verbose mode, I get an error with an undefined command", async ({
   page,
 }) => {
@@ -68,6 +88,9 @@ test("on verbose mode, I get an error with an undefined command", async ({
   await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
 });
 
+/**
+ * Tests that we can load a file on verbose mode
+ */
 test("on verbose mode, I get a success message when loading a file", async ({
   page,
 }) => {
@@ -82,6 +105,9 @@ test("on verbose mode, I get a success message when loading a file", async ({
   await expect(page.getByText("file1 successfully loaded!")).toBeVisible;
 });
 
+/**
+ * Tests that we get an error when loading invalid files on verbose mode
+ */
 test("on verbose mode, I get an error when loading an invalid file", async ({
   page,
 }) => {
@@ -96,6 +122,9 @@ test("on verbose mode, I get an error when loading an invalid file", async ({
   await expect(page.getByText("Failed to load file.")).toBeVisible;
 });
 
+/**
+ * Tests that we get an error message for invalid commands on verbose mode
+ */
 test("on verbose mode, I get an error message when inputting an incorrect command", async ({
   page,
 }) => {

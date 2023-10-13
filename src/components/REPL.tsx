@@ -19,6 +19,13 @@ export default function REPL() {
   //const submittedCommands: string[] = [];
   const [submittedCommands, setSubmittedCommands] = useState<JSX.Element[]>([]);
   //const [submittedInputs, setSubmittedInputs] = useState<string[]>([]);
+  const [fileLoaded, setFileLoaded] = useState<boolean>(false);
+  const [currentFile, setCurrentFile] = useState<{
+    data: {
+      headers: string[];
+      body: string[][];
+    };
+  }>({ data: { headers: [], body: [] } });
   const [submittedInputs, setSubmittedInputs] = useState<
     {
       input: string;
@@ -26,7 +33,6 @@ export default function REPL() {
     }[]
   >([]);
   const [mode, setMode] = useState<string>("Brief");
-  const file1 = mockedJson().file1;
 
   function addCommand(str: string) {
     const newCommand = parseCommandLine(str);
@@ -47,26 +53,30 @@ export default function REPL() {
     if (usage === "view") {
       if (inputLength > 1) {
         newCommands.push(<div>Improper arguments used.</div>);
+      } else if (!fileLoaded) {
+        newCommands.push(<div>No file loaded.</div>);
       } else {
         const body: string[] = [];
-        file1.data.body.forEach((stringArr: string[]) => {
-          //looping through list of lists
-          let tempStr = "";
-          stringArr.forEach((str: string) => {
-            tempStr += str + ", ";
+        currentFile &&
+          currentFile.data.body.forEach((stringArr: string[]) => {
+            //looping through list of lists
+            let tempStr = "";
+            stringArr.forEach((str: string) => {
+              tempStr += str + ", ";
+            });
+            body.push(tempStr.substring(0, tempStr.length - 2));
+            tempStr = "";
           });
-          body.push(tempStr.substring(0, tempStr.length - 2));
-          tempStr = "";
-        });
 
         body.forEach((str: string) => {
           newCommands.push(<div>{str}</div>);
         });
       }
-
     } else if (usage === "search") {
-      if (inputLength > 3 || inputLength == 1 ) {
+      if (inputLength > 3 || inputLength == 1) {
         newCommands.push(<div>Improper arguments used.</div>);
+      } else if (!fileLoaded) {
+        newCommands.push(<div>No file loaded.</div>);
       } else {
         const props: SearchProps = {
           splitInput: splitInput,
@@ -74,12 +84,21 @@ export default function REPL() {
         };
         newCommands.push(searchCSV(props));
       }
-    } else if (usage == "load") { //TODO: we have to check if load is called before allowing view to be called 
-      console.log("TODO: load");
+    } else if (usage == "load_file") {
+      const fileName = splitInput[1];
+      if (
+        mockedJson(fileName).data.headers.length === 0 &&
+        mockedJson(fileName).data.body.length === 0
+      ) {
+        newCommands.push(<div>Failed to load file.</div>);
+      } else {
+        setCurrentFile(mockedJson(fileName));
+        setFileLoaded(true);
+        newCommands.push(<div>{fileName} successfully loaded!</div>);
+      }
     } else {
-      newCommands.push(<div>Unknown command was input.</div>)
+      newCommands.push(<div>Unknown command was inputted.</div>);
     }
-
 
     return <div>{newCommands}</div>;
   };

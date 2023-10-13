@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("on clicking the mode, I can change it to 'verbose'", async ({ page }) => {
-  await expect(page.getByLabel("Mode-Header")).toBeVisible;
+  await expect(page.getByLabel("Mode-Header")).toBeVisible();
   await expect(page.getByLabel("Mode")).toContainText(["Brief"]);
   await page.getByLabel("Mode", { exact: true }).click();
   await expect(page.getByLabel("Mode")).toContainText(["Verbose"]);
@@ -26,7 +26,7 @@ test("on brief mode, I get an error with an undefined command", async ({
 }) => {
   await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
+  await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
 });
 
 test("on brief mode, I get a success message when loading a file", async ({

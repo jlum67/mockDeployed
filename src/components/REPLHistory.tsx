@@ -17,8 +17,10 @@ export function REPLHistory(props: REPLHistoryProps) {
       if (mode === "Verbose") {
         return (
           <div aria-label="command" className="command" key={value.input}>
-            <div>Command: {value.input}</div>
-            <div>Output: {value.output}</div>
+            <div className="command-header">Command:</div>
+            <div>{value.input}</div>
+            <div className="output-header">Output:</div>
+            <div>{value.output}</div>
           </div>
         );
       } else {

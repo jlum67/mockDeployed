@@ -13,10 +13,10 @@ export default function mockedJson(fileName: string) {
           "Employed Percent",
         ],
         body: [
-          ["RI", "White", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%"],
+          ["WA", "White", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%"],
           ["RI", "Black", " $770.26 ", "30424.80376", " $0.73 ", "6%"],
           [
-            "RI",
+            "CA",
             "Native American/American Indian",
             " $471.07 ",
             "2315.505646",
@@ -24,7 +24,7 @@ export default function mockedJson(fileName: string) {
             "0%",
           ],
           [
-            "RI",
+            "OH",
             "Asian-Pacific Islander",
             '" $1,080.09 "',
             "18956.71657",
@@ -32,16 +32,16 @@ export default function mockedJson(fileName: string) {
             "4%",
           ],
           [
-            "RI",
+            "NE",
             "Hispanic/Latino",
             " $673.14 ",
             "74596.18851",
             " $0.64 ",
             "14%",
           ],
-          ["RI", "Multiracial", " $971.89 ", "8883.049171", " $0.92 ", "2%"],
+          ["TX", "Multiracial", " $971.89 ", "8883.049171", " $0.92 ", "2%"],
           ["DE", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%", "White"],
-          ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
+          ["AL", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
         ],
       },
     };
@@ -50,10 +50,10 @@ export default function mockedJson(fileName: string) {
       data: {
         headers: [],
         body: [
-          ["RI", "White", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%"],
+          ["WA", "White", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%"],
           ["RI", "Black", " $770.26 ", "30424.80376", " $0.73 ", "6%"],
           [
-            "RI",
+            "CA",
             "Native American/American Indian",
             " $471.07 ",
             "2315.505646",
@@ -61,7 +61,7 @@ export default function mockedJson(fileName: string) {
             "0%",
           ],
           [
-            "RI",
+            "OH",
             "Asian-Pacific Islander",
             '" $1,080.09 "',
             "18956.71657",
@@ -69,16 +69,16 @@ export default function mockedJson(fileName: string) {
             "4%",
           ],
           [
-            "RI",
+            "NE",
             "Hispanic/Latino",
             " $673.14 ",
             "74596.18851",
             " $0.64 ",
             "14%",
           ],
-          ["RI", "Multiracial", " $971.89 ", "8883.049171", " $0.92 ", "2%"],
+          ["TX", "Multiracial", " $971.89 ", "8883.049171", " $0.92 ", "2%"],
           ["DE", '" $1,058.47 "', "395773.6521", " $1.00 ", "75%", "White"],
-          ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
+          ["AL", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
         ],
       },
     };

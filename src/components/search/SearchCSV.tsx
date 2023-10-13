@@ -4,6 +4,7 @@ export interface SearchProps {
   // Fill with some shared state tracking all the pushed commands
   splitInput: string[];
   inputLength: number;
+  fileName: string
 }
 
 export function searchCSV(props: SearchProps) {
@@ -11,12 +12,16 @@ export function searchCSV(props: SearchProps) {
 
   if (props.inputLength === 2) {
     //no column name or index provided
-    searchOutput = mockSearch("", props.splitInput[1].toLowerCase());
+    searchOutput = mockSearch("", props.splitInput[1].toLowerCase(), props.fileName);
   } else {
     const column = props.splitInput[1];
     const toSearch = props.splitInput[2];
 
-    searchOutput = mockSearch(column.toLowerCase(), toSearch.toLowerCase());
+    searchOutput = mockSearch(
+      column.toLowerCase(),
+      toSearch.toLowerCase(),
+      props.fileName
+    );
     console.log("here1");
   }
 

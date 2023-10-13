@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import mockedJson from "../src/modules/mockedJson";
+
 
 /**
   The general shapes of tests in Playwright Test are:
@@ -18,6 +20,13 @@ test.beforeEach(async ({ page }) => {
 test("too many arguments input for search", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search hi hi hi");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Improper arguments used.")).toBeVisible;
+});
+
+test("too few arguments input for search", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search");
   await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.getByText("Improper arguments used.")).toBeVisible;
 });
@@ -105,10 +114,78 @@ test("searching with column index provided", async ({ page }) => {
     " $0.92 ",
     "2%",
   ];
+});
+
+test("load once, search multiple times", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 1 multiracial");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues: string[] = [
+    "RI",
+    "Multiracial",
+    " Hispanic ",
+    "8883.049171",
+    " $0.92 ",
+    "2%",
+  ];
 
   for (let i = 0; i < rowValues.length; i++) {
     await expect(page.getByText(rowValues[i])).toBeVisible;
   }
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search state de");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues2: string[] = [
+    "DE",
+    '" $1,058.47 "',
+    "395773.6521",
+    " $1.00 ",
+    "75%",
+    "White",
+  ];
+
+  for (let i = 0; i < rowValues2.length; i++) {
+    await expect(page.getByText(rowValues2[i])).toBeVisible;
+  }
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search hispanic");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues3: string[] = [
+    "RI",
+    "Hispanic/Latino",
+    "$673.14",
+    "74596.18851",
+    "$0.64",
+    "14%",
+  ];
+
+  for (let i = 0; i < rowValues3.length; i++) {
+    await expect(page.getByText(rowValues3[i])).toBeVisible;
+  }
+
+  const rowValues4: string[] = [
+    "RI",
+    "Multiracial",
+    " Hispanic ",
+    "8883.049171",
+    " $0.92 ",
+    "2%",
+  ];
+
+  for (let i = 0; i < rowValues4.length; i++) {
+    await expect(page.getByText(rowValues4[i])).toBeVisible;
+  }
+
+
 });
 
 test("searching valid inputs but nothing found - column and index not provided", async ({
@@ -154,3 +231,206 @@ test("searching valid inputs but nothing found - column index", async ({
     .toBeVisible;
 });
 
+test("change load, see if search updates properly", async ({
+  page,
+}) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search herro");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("herro")).toBeVisible;
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search 1 multiracial");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues: string[] = [
+    "RI",
+    "Multiracial",
+    " Hispanic ",
+    "8883.049171",
+    " $0.92 ",
+    "2%",
+  ];
+
+  for (let i = 0; i < rowValues.length; i++) {
+    await expect(page.getByText(rowValues[i])).toBeVisible;
+  }
+});
+
+test("searching empty file", async ({
+  page,
+}) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file empty");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search jeremy");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Search request could not be found."))
+    .toBeVisible;
+});
+
+test("searching one item table and search multiple times", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search herro");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("herro")).toBeVisible;
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search jeremy");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Search request could not be found."))
+      .toBeVisible;
+});
+
+test("searching one col file", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneCol");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search white");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("white"))
+    .toBeVisible;
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search jerm");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Search request could not be found."))
+    .toBeVisible;
+});
+
+test("searching one row file", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneRow");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search white");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues: string[] = [
+    "RI",
+    "White",
+    '" $1,058.47 "',
+    "395773.6521",
+    " $1.00 ",
+    "75%",
+  ];
+
+  for (let i = 0; i < rowValues.length; i++) {
+    await expect(page.getByText(rowValues[i])).toBeVisible;
+  }
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search hi");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByText("Search request could not be found."))
+    .toBeVisible;
+});
+
+test("testing load, search, view interactions", async ({ page }) => {
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const headers = mockedJson("file1").data.headers;
+  const body = mockedJson("file1").data.body;
+
+  for (let i = 0; i < headers.length; i++) {
+    await expect(page.getByText(headers[i], { exact: true })).toBeVisible();
+  }
+
+  for (let j = 0; j < body.length; j++) {
+    for (let k = 0; k < body[j].length; k++) {
+      const elt = page.getByText(body[j][k], { exact: true });
+      const count = await elt.count();
+      if (count > 1) {
+        for (let l = 0; l < count; l++) {
+          await expect(elt.nth(l)).toBeVisible();
+        }
+      } else {
+        await expect(elt).toBeVisible();
+      }
+    }
+  }
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search hispanic");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues: string[] = [
+    "RI",
+    "Hispanic/Latino",
+    "$673.14",
+    "74596.18851",
+    "$0.64",
+    "14%",
+  ];
+
+  for (let i = 0; i < rowValues.length; i++) {
+    await expect(page.getByText(rowValues[i])).toBeVisible;
+  }
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+});
+
+test("testing verbosity (brief is used in all other tests)", async ({ page }) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("search hispanic");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const rowValues: string[] = [
+    "RI",
+    "Hispanic/Latino",
+    "$673.14",
+    "74596.18851",
+    "$0.64",
+    "14%",
+  ];
+
+  for (let i = 0; i < rowValues.length; i++) {
+    await expect(page.getByText(rowValues[i])).toBeVisible;
+  }
+
+  await page.getByLabel("Mode", { exact: true }).click();
+  await expect(page.getByText("output")).toBeVisible;
+  await expect(page.getByText("command")).toBeVisible;
+});

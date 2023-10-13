@@ -16,6 +16,7 @@ export interface LoadProps {
     }>
   >;
   setFileLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setFileName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -32,6 +33,7 @@ export function loadCSV(props: LoadProps) {
     return <div>Failed to load file.</div>;
   } else {
     // load file
+    props.setFileName(props.fileName)
     props.setCurrentFile(mockedJson(props.fileName));
     props.setFileLoaded(true);
     return <div>{props.fileName} successfully loaded!</div>;

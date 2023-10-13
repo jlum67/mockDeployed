@@ -32,6 +32,7 @@ export default function REPL() {
     }[]
   >([]);
   const [mode, setMode] = useState<string>("Brief");
+  const [fileName, setFileName] = useState("")
 
   /**
    * Pushes a new command to the REPL history
@@ -80,15 +81,18 @@ export default function REPL() {
         const props: SearchProps = {
           splitInput: splitInput,
           inputLength: inputLength,
+          fileName: fileName
         };
         newCommands.push(searchCSV(props));
       }
     } else if (usage == "load_file") {
       // handles calls to load csv
+      // setFileName(splitInput[1]);
       const props: LoadProps = {
         fileName: splitInput[1],
         setCurrentFile: setCurrentFile,
         setFileLoaded: setFileLoaded,
+        setFileName: setFileName
       };
       newCommands.push(loadCSV(props));
     } else {

@@ -1,17 +1,26 @@
 import { mockSearch } from "./MockSearch";
 
+/**
+ * Stores inputs into searchCSV. Contains arguments used with search, length of
+ * input, and current loaded file name.
+ */
 export interface SearchProps {
-  // Fill with some shared state tracking all the pushed commands
   splitInput: string[];
   inputLength: number;
   fileName: string
 }
 
+/**
+ * Contains search functionality, outputting result of search request. Search 
+ * results come from MockSearch, which models backend call.
+ * 
+ * @param props inputs needed to carry out search. specified in interface comment
+ * @returns table containing search results
+ */
 export function searchCSV(props: SearchProps) {
   let searchOutput: string[][] = [];
 
   if (props.inputLength === 2) {
-    //no column name or index provided
     searchOutput = mockSearch("", props.splitInput[1].toLowerCase(), props.fileName);
   } else {
     const column = props.splitInput[1];
@@ -37,20 +46,6 @@ export function searchCSV(props: SearchProps) {
     out.push(<div>Search request could not be found.</div>);
     return <div>{out}</div>;
   } else {
-    // searchOutput.forEach((stringArr: string[]) => {
-    //   //looping through list of lists
-    //   let tempStr = "";
-    //   stringArr.forEach((str: string) => {
-    //     tempStr += str + ", ";
-    //   });
-    //   body.push(tempStr.substring(0, tempStr.length - 2));
-    //   tempStr = "";
-    // });
-
-    // body.forEach((str: string) => {
-    //   out.push(<div>{str}</div>);
-    // });
-
     return (
       <table>
         <tbody>
@@ -65,5 +60,4 @@ export function searchCSV(props: SearchProps) {
       </table>
     );
   }
-  // return <div>{out}</div>;
 }

@@ -1,5 +1,13 @@
+/**
+ * Returns mock search results to mode backend call to search. Contains mock 
+ * results for different shapes of data and queries. 
+ * 
+ * @param column column name or index
+ * @param toSearch value to find
+ * @param fileName file to search through
+ * @returns list of list of strings/output
+ */
 export function mockSearch(column: string, toSearch: string, fileName: string): string[][] {
-
 
   let possibleOutputs: { [key: string]: { [key: string]: string[][] } } = {};
   console.log(fileName)

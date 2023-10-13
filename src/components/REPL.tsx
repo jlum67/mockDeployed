@@ -33,12 +33,6 @@ export default function REPL() {
     }[]
   >([]);
   const [mode, setMode] = useState<string>("Brief");
-  let file: {
-    data: {
-      headers: string[];
-      body: string[][];
-    };
-  };
 
   function addCommand(str: string) {
     const newCommand = parseCommandLine(str);
@@ -63,8 +57,8 @@ export default function REPL() {
         newCommands.push(<div>No file loaded.</div>);
       } else {
         const body: string[] = [];
-        file &&
-          file.data.body.forEach((stringArr: string[]) => {
+        currentFile &&
+          currentFile.data.body.forEach((stringArr: string[]) => {
             //looping through list of lists
             let tempStr = "";
             stringArr.forEach((str: string) => {
@@ -100,6 +94,7 @@ export default function REPL() {
       } else {
         setCurrentFile(mockedJson(fileName));
         setFileLoaded(true);
+        newCommands.push(<div>{fileName} successfully loaded!</div>);
       }
     } else {
       newCommands.push(<div>Unknown command was inputted.</div>);

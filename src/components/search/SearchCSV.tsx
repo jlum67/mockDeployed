@@ -7,7 +7,6 @@ export interface SearchProps {
 }
 
 export function searchCSV(props: SearchProps) {
-
   let searchOutput: string[][] = [];
 
   if (props.inputLength === 2) {
@@ -22,7 +21,7 @@ export function searchCSV(props: SearchProps) {
   }
 
   if (searchOutput == undefined) {
-    console.log("here")
+    console.log("here");
     searchOutput = [];
   }
 
@@ -30,43 +29,36 @@ export function searchCSV(props: SearchProps) {
   const body: string[] = [];
 
   if (searchOutput.length === 0) {
-
-    out.push(<div>Search request could not be found.</div>)
+    out.push(<div>Search request could not be found.</div>);
     return <div>{out}</div>;
-
   } else {
+    // searchOutput.forEach((stringArr: string[]) => {
+    //   //looping through list of lists
+    //   let tempStr = "";
+    //   stringArr.forEach((str: string) => {
+    //     tempStr += str + ", ";
+    //   });
+    //   body.push(tempStr.substring(0, tempStr.length - 2));
+    //   tempStr = "";
+    // });
 
-      // searchOutput.forEach((stringArr: string[]) => {
-      //   //looping through list of lists
-      //   let tempStr = "";
-      //   stringArr.forEach((str: string) => {
-      //     tempStr += str + ", ";
-      //   });
-      //   body.push(tempStr.substring(0, tempStr.length - 2));
-      //   tempStr = "";
-      // });
+    // body.forEach((str: string) => {
+    //   out.push(<div>{str}</div>);
+    // });
 
-      // body.forEach((str: string) => {
-      //   out.push(<div>{str}</div>);
-      // });
-
-      return (
-        <table>
-          <tbody>
-            {searchOutput.map((stringArr: string[]) => (
-              <tr className="table-headers">
-                {stringArr.map((str: string) => (
-                  <td className="custom-cell">{str}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
+    return (
+      <table>
+        <tbody>
+          {searchOutput.map((stringArr: string[]) => (
+            <tr className="table-headers">
+              {stringArr.map((str: string) => (
+                <td className="custom-cell">{str}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   }
-
-
-
   // return <div>{out}</div>;
-   
 }

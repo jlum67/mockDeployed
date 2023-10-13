@@ -15,6 +15,9 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:8000/");
 });
 
+/**
+ * Tests that we can load and view a file with headers in brief mode
+ */
 test("on brief mode, I can load and view a file with headers", async ({
   page,
 }) => {
@@ -49,6 +52,9 @@ test("on brief mode, I can load and view a file with headers", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file without headers on verbose mode
+ */
 test("on brief mode, I can load and view a file without headers", async ({
   page,
 }) => {
@@ -84,6 +90,9 @@ test("on brief mode, I can load and view a file without headers", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one row on brief mode
+ */
 test("on brief mode, I can load and view a file with one row", async ({
   page,
 }) => {
@@ -117,6 +126,9 @@ test("on brief mode, I can load and view a file with one row", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one column on brief mode
+ */
 test("on brief mode, I can load and view a file with one column", async ({
   page,
 }) => {
@@ -150,6 +162,9 @@ test("on brief mode, I can load and view a file with one column", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one cell on brief mode
+ */
 test("on brief mode, I can load and view a file with one cell", async ({
   page,
 }) => {
@@ -183,6 +198,9 @@ test("on brief mode, I can load and view a file with one cell", async ({
   }
 });
 
+/**
+ * Tests that we can load and view an empty file on brief mode
+ */
 test("on brief mode, I can load and view an empty file", async ({ page }) => {
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file empty");
@@ -216,6 +234,10 @@ test("on brief mode, I can load and view an empty file", async ({ page }) => {
   }
 });
 
+/**
+ * Tests that we get an error when trying to view a file without loading
+ * anything on brief mode
+ */
 test("on brief mode, I get an error when I try to view a file without loading anything", async ({
   page,
 }) => {
@@ -227,6 +249,9 @@ test("on brief mode, I get an error when I try to view a file without loading an
   ).toBeVisible();
 });
 
+/**
+ * Tests that we can load and view a file with headers in verbose mode
+ */
 test("on verbose mode, I can load and view a file with headers", async ({
   page,
 }) => {
@@ -274,6 +299,9 @@ test("on verbose mode, I can load and view a file with headers", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file without headers on verbose mode
+ */
 test("on verbose mode, I can load and view a file without headers", async ({
   page,
 }) => {
@@ -322,6 +350,9 @@ test("on verbose mode, I can load and view a file without headers", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one row on verbose mode
+ */
 test("on verbose mode, I can load and view a file with one row", async ({
   page,
 }) => {
@@ -368,6 +399,9 @@ test("on verbose mode, I can load and view a file with one row", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one column on verbose mode
+ */
 test("on verbose mode, I can load and view a file with one column", async ({
   page,
 }) => {
@@ -414,6 +448,9 @@ test("on verbose mode, I can load and view a file with one column", async ({
   }
 });
 
+/**
+ * Tests that we can load and view a file with one cell on verbose mode
+ */
 test("on verbose mode, I can load and view a file with one cell", async ({
   page,
 }) => {
@@ -460,6 +497,9 @@ test("on verbose mode, I can load and view a file with one cell", async ({
   }
 });
 
+/**
+ * Tests that we can load and view an empty file on verbose mode
+ */
 test("on verbose mode, I can load and view an empty file", async ({ page }) => {
   await page.getByLabel("Mode", { exact: true }).click();
   await page.getByLabel("Command input").click();
@@ -506,6 +546,10 @@ test("on verbose mode, I can load and view an empty file", async ({ page }) => {
   }
 });
 
+/**
+ * Tests that we get an error when trying to view a file without loading
+ * anything on verbose mode
+ */
 test("on verbose mode, I get an error when I try to view a file without loading anything", async ({
   page,
 }) => {

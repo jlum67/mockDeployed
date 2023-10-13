@@ -1,7 +1,8 @@
 import mockedJson from "../../modules/mockedJson";
 
 /**
- * Props for LoadCSV, passed in by REPL
+ * Props for LoadCSV, passed in by REPL. Sets the current file based on what
+ * it's asked to load
  */
 export interface LoadProps {
   // Fill with some shared state tracking all the pushed commands

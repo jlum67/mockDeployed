@@ -47,3 +47,20 @@ button {
 .command {
   margin-bottom: 1em;
 }
+
+table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.table-headers td {
+  font-weight: bold;
+  padding: 1em;
+}
+
+
+.custom-cell {
+  border: 1px solid white; 
+  padding: 8px; 
+}

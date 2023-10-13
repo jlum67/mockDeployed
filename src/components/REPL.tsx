@@ -56,22 +56,45 @@ export default function REPL() {
       } else if (!fileLoaded) {
         newCommands.push(<div>No file loaded.</div>);
       } else {
-        const body: string[] = [];
-        const newTable: JSX.Element[] = [];
-        currentFile &&
-          currentFile.data.body.forEach((stringArr: string[]) => {
-            //looping through list of lists
-            let tempStr = "";
-            stringArr.forEach((str: string) => {
-              tempStr += str + ", ";
-            });
-            body.push(tempStr.substring(0, tempStr.length - 2));
-            tempStr = "";
-          });
+        newCommands.push(
+          <table>
+            <thead>
+              <tr className="table-headers">
+                {currentFile.data.headers.map((header: string) => (
+                  <td>{header}</td>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {currentFile.data.body.map((stringArr: string[]) => (
+                <tr>
+                  {stringArr.map((str: string) => (
+                    <td>{str}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
 
-        body.forEach((str: string) => {
-          newCommands.push(<tr>{str}</tr>);
-        });
+        // currentFile.data.body.map((stringArr: string[]) => {
+        //   //looping through list of lists
+        //   //let tempStr = "";
+        //   stringArr.map((str: string) => {
+        //     //tempStr += str + ", ";
+        //     <td>{str}</td>;
+        //   });
+        //   // body.push(tempStr.substring(0, tempStr.length - 2));
+        //   // tempStr = "";
+
+        //   return <tr>{cells}</tr>;
+        // });
+
+        // console.log(<table>{rows}</table>);
+        //newCommands.push(<table>{rows}</table>);
+        // body.forEach((str: string) => {
+        //   newCommands.push(<tr>{str}</tr>);
+        // });
       }
     } else if (usage === "search") {
       if (inputLength > 3 || inputLength == 1) {

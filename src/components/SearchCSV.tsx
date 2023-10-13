@@ -1,3 +1,4 @@
+import { mockSearch } from "./MockSearch";
 
 export interface SearchProps {
   // Fill with some shared state tracking all the pushed commands
@@ -7,53 +8,65 @@ export interface SearchProps {
 
 export function searchCSV(props: SearchProps) {
 
-    const noNameOrIndex = [ //getter or setter or something 
-      ["RI", "Hispanic/Latino", " $673.14 ", "74596.18851", " $0.64 ", "14%"],
-      ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
-    ];
+  let searchOutput: string[][] = [];
 
-    const name = [ // data type column
-      ["RI", "Hispanic/Latino", " $673.14 ", "74596.18851", " $0.64 ", "14%"],
-    ];
+  if (props.inputLength === 2) {
+    //no column name or index provided
+    searchOutput = mockSearch("", props.splitInput[1].toLowerCase());
+  } else {
+    const column = props.splitInput[1];
+    const toSearch = props.splitInput[2];
 
-    const index = [ // column 2
-      ["RI", "Multiracial", " Hispanic ", "8883.049171", " $0.92 ", "2%"],
-    ];
+    searchOutput = mockSearch(column.toLowerCase(), toSearch.toLowerCase());
+    console.log("here1");
+  }
 
-    let searchOutput: string[][] = [];
+  if (searchOutput == undefined) {
+    console.log("here")
+    searchOutput = [];
+  }
 
-    //TODO: check that search inputs such as column name and index are correct, otherwise output could not be found or something
-    if (props.inputLength === 2) { //no column name or index provided
-        searchOutput = noNameOrIndex;
-    } else {
-        const column = props.splitInput[1]
-        const toSearch = props.splitInput[2];
+  const out: JSX.Element[] = [];
+  const body: string[] = [];
 
-        const isNumber = parseInt(column);
+  if (searchOutput.length === 0) {
 
-        if (isNaN(isNumber)) {
-            searchOutput = name;
-        } else {
-            searchOutput = index;
-        }
-    }
+    out.push(<div>Search request could not be found.</div>)
+    return <div>{out}</div>;
 
-    const out: JSX.Element[] = [];
-    const body: string[] = [];
-    searchOutput.forEach((stringArr: string[]) => {
-            //looping through list of lists
-        let tempStr = "";
-        stringArr.forEach((str: string) => {
-            tempStr += str + ", ";
-        });
-        body.push(tempStr.substring(0, tempStr.length - 2));
-        tempStr = "";
-    });
+  } else {
 
-    body.forEach((str: string) => {
-        out.push(<div>{str}</div>);
-    });
+      // searchOutput.forEach((stringArr: string[]) => {
+      //   //looping through list of lists
+      //   let tempStr = "";
+      //   stringArr.forEach((str: string) => {
+      //     tempStr += str + ", ";
+      //   });
+      //   body.push(tempStr.substring(0, tempStr.length - 2));
+      //   tempStr = "";
+      // });
 
-    return <div>{out}</div>
+      // body.forEach((str: string) => {
+      //   out.push(<div>{str}</div>);
+      // });
 
+      return (
+        <table>
+          <tbody>
+            {searchOutput.map((stringArr: string[]) => (
+              <tr className="table-headers">
+                {stringArr.map((str: string) => (
+                  <td className="custom-cell">{str}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+  }
+
+
+
+  // return <div>{out}</div>;
+   
 }

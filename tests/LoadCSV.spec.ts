@@ -288,6 +288,9 @@ test("on verbose mode, I get an error message when inputting an incorrect comman
   await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
 });
 
+/**
+ * Tests that we can make consecutive calls to load on brief mode
+ */
 test("on brief mode, we can make consecutive calls to load", async ({
   page,
 }) => {
@@ -309,6 +312,9 @@ test("on brief mode, we can make consecutive calls to load", async ({
   await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
 });
 
+/**
+ * Tests that we can make consecutive calls to load on verbose mode
+ */
 test("on verbose mode, we can make consecutive calls to load", async ({
   page,
 }) => {

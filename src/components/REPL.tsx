@@ -60,30 +60,10 @@ export default function REPL() {
       } else if (!fileLoaded) {
         newCommands.push(<div>No file loaded.</div>);
       } else {
-
         const props: ViewProps = {
           currentFile: currentFile
         };
-
         newCommands.push(
-          // <table>
-          //   <thead>
-          //     <tr className="table-headers">
-          //       {currentFile.data.headers.map((header: string) => (
-          //         <td>{header}</td>
-          //       ))}
-          //     </tr>
-          //   </thead>
-          //   <tbody>
-          //     {currentFile.data.body.map((stringArr: string[]) => (
-          //       <tr>
-          //         {stringArr.map((str: string) => (
-          //           <td>{str}</td>
-          //         ))}
-          //       </tr>
-          //     ))}
-          //   </tbody>
-          // </table>
           viewCSV(props)
         );
       }

@@ -9,8 +9,6 @@ export interface ViewProps {
 }
 
 export function viewCSV(props: ViewProps) {
-
-
     return (
       <table>
         <thead>
@@ -31,5 +29,4 @@ export function viewCSV(props: ViewProps) {
         </tbody>
       </table>
     );
-  
 }

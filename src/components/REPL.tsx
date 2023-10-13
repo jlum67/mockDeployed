@@ -5,7 +5,7 @@ import { REPLInput } from "./REPLInput";
 import mockedJson from "../modules/mockedJson";
 import { searchCSV, SearchProps } from "./SearchCSV";
 import { loadCSV, LoadProps } from "./LoadCSV";
-// import { viewCSV, ViewProps } from "./ViewCSV";
+import { viewCSV, ViewProps } from "./viewCSV";
 
 
 
@@ -60,6 +60,11 @@ export default function REPL() {
       } else if (!fileLoaded) {
         newCommands.push(<div>No file loaded.</div>);
       } else {
+
+        const props: ViewProps = {
+          currentFile: currentFile
+        };
+
         newCommands.push(
           // <table>
           //   <thead>
@@ -79,11 +84,7 @@ export default function REPL() {
           //     ))}
           //   </tbody>
           // </table>
-
-        // const props: ViewProps = {
-        //   currentFile: currentFile
-        // };
-        //   loadCSV(props);
+          viewCSV(props)
         );
       }
     } else if (usage === "search") {

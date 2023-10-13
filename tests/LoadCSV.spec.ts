@@ -46,7 +46,7 @@ test("on brief mode, I get a success message when loading a file with headers", 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("file1 successfully loaded!")).toBeVisible;
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -58,8 +58,9 @@ test("on brief mode, I get a success message when loading a file without headers
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1noheaders");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("file1noheaders successfully loaded!"))
-    .toBeVisible;
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
 });
 
 /**
@@ -71,7 +72,7 @@ test("on brief mode, I get a success message when loading a file with one column
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneCol");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("oneCol successfully loaded!")).toBeVisible;
+  await expect(page.getByText("oneCol successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -83,7 +84,7 @@ test("on brief mode, I get a success message when loading a file with one row", 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneRow");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("oneRow successfully loaded!")).toBeVisible;
+  await expect(page.getByText("oneRow successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -95,7 +96,7 @@ test("on brief mode, I get a success message when loading a file with one cell",
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneItem");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible;
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -107,7 +108,7 @@ test("on brief mode, I get a success message when loading an empty file", async 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file empty");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("empty successfully loaded!")).toBeVisible;
+  await expect(page.getByText("empty successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -119,7 +120,7 @@ test("on brief mode, I get an error when loading an invalid file", async ({
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file asdf");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Failed to load file.")).toBeVisible;
+  await expect(page.getByText("Failed to load file.")).toBeVisible();
 });
 
 /**
@@ -131,7 +132,7 @@ test("on brief mode, I get an error message when inputting an incorrect command"
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("hello world");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
+  await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
 });
 
 /**
@@ -144,9 +145,9 @@ test("on verbose mode, I get an error with an undefined command", async ({
 
   await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Command:")).toBeVisible;
-  await expect(page.getByText("Output:")).toBeVisible;
-  await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
 });
 
 /**
@@ -160,10 +161,10 @@ test("on verbose mode, I get a success message when loading a file with headers"
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file file1")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("file1 successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file file1")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -177,10 +178,12 @@ test("on verbose mode, I get a success message when loading a file without heade
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file file1noheaders");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file file1noheaders")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("file1noheaders successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file file1noheaders")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
 });
 
 /**
@@ -194,10 +197,10 @@ test("on verbose mode, I get a success message when loading a file with one colu
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneCol");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file oneCol")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("oneCol successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file oneCol")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("oneCol successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -211,10 +214,10 @@ test("on verbose mode, I get a success message when loading a file with one row"
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneRow");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file oneRow")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("oneRow successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file oneRow")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("oneRow successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -228,10 +231,10 @@ test("on verbose mode, I get a success message when loading a file with one cell
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file oneItem");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file oneItem")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("oneItem successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file oneItem")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -245,10 +248,10 @@ test("on verbose mode, I get a success message when loading an empty file", asyn
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file empty");
   await page.getByRole("button", { name: "Submit" }).click();
-  expect(page.getByText("Command:")).toBeVisible;
-  expect(page.getByText("load_file empty")).toBeVisible;
-  expect(page.getByText("Output:")).toBeVisible;
-  expect(page.getByText("empty successfully loaded!")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file empty")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("empty successfully loaded!")).toBeVisible();
 });
 
 /**
@@ -262,10 +265,10 @@ test("on verbose mode, I get an error when loading an invalid file", async ({
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_file asdf");
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Command:")).toBeVisible;
-  await expect(page.getByText("load_file asdf")).toBeVisible;
-  await expect(page.getByText("Output:")).toBeVisible;
-  await expect(page.getByText("Failed to load file.")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("load_file asdf")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("Failed to load file.")).toBeVisible();
 });
 
 /**
@@ -278,9 +281,62 @@ test("on verbose mode, I get an error message when inputting an incorrect comman
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("hello world");
-  await expect(page.getByText("Command:")).toBeVisible;
-  await expect(page.getByText("hello world")).toBeVisible;
   await page.getByRole("button", { name: "Submit" }).click();
-  await expect(page.getByText("Output:")).toBeVisible;
-  await expect(page.getByText("Unknown command was inputted.")).toBeVisible;
+  await expect(page.getByText("Command:", { exact: true })).toBeVisible();
+  await expect(page.getByText("hello world")).toBeVisible();
+  await expect(page.getByText("Output:", { exact: true })).toBeVisible();
+  await expect(page.getByText("Unknown command was inputted.")).toBeVisible();
+});
+
+test("on brief mode, we can make consecutive calls to load", async ({
+  page,
+}) => {
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
+});
+
+test("on verbose mode, we can make consecutive calls to load", async ({
+  page,
+}) => {
+  await page.getByLabel("Mode", { exact: true }).click();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(0)).toBeVisible();
+  await expect(page.getByText("load_file file1")).toBeVisible();
+  await expect(page.getByText("Output:").nth(0)).toBeVisible();
+  await expect(page.getByText("file1 successfully loaded!")).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file file1noheaders");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(1)).toBeVisible();
+  await expect(page.getByText("load_file file1noheaders")).toBeVisible();
+  await expect(page.getByText("Output:").nth(1)).toBeVisible();
+  await expect(
+    page.getByText("file1noheaders successfully loaded!")
+  ).toBeVisible();
+
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_file oneItem");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByText("Command:").nth(2)).toBeVisible();
+  await expect(page.getByText("load_file oneItem")).toBeVisible();
+  await expect(page.getByText("Output:").nth(2)).toBeVisible();
+  await expect(page.getByText("oneItem successfully loaded!")).toBeVisible();
 });

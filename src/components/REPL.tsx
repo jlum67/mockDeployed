@@ -59,6 +59,8 @@ export default function REPL() {
     if (usage === "view") {
       if (inputLength > 1) {
         newCommands.push(<div>Improper arguments used.</div>);
+      } else if (!fileLoaded) {
+        newCommands.push(<div>No file loaded.</div>);
       } else {
         const body: string[] = [];
         file &&
@@ -79,6 +81,8 @@ export default function REPL() {
     } else if (usage === "search") {
       if (inputLength > 3 || inputLength == 1) {
         newCommands.push(<div>Improper arguments used.</div>);
+      } else if (!fileLoaded) {
+        newCommands.push(<div>No file loaded.</div>);
       } else {
         const props: SearchProps = {
           splitInput: splitInput,
@@ -87,7 +91,6 @@ export default function REPL() {
         newCommands.push(searchCSV(props));
       }
     } else if (usage == "load_file") {
-      //TODO: we have to check if load is called before allowing view to be called
       const fileName = splitInput[1];
       if (
         mockedJson(fileName).data.headers.length === 0 &&

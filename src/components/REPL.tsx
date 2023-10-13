@@ -4,6 +4,10 @@ import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import mockedJson from "../modules/mockedJson";
 import { searchCSV, SearchProps } from "./SearchCSV";
+import { loadCSV, LoadProps } from "./LoadCSV";
+// import { viewCSV, ViewProps } from "./ViewCSV";
+
+
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -57,44 +61,30 @@ export default function REPL() {
         newCommands.push(<div>No file loaded.</div>);
       } else {
         newCommands.push(
-          <table>
-            <thead>
-              <tr className="table-headers">
-                {currentFile.data.headers.map((header: string) => (
-                  <td>{header}</td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentFile.data.body.map((stringArr: string[]) => (
-                <tr>
-                  {stringArr.map((str: string) => (
-                    <td>{str}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          // <table>
+          //   <thead>
+          //     <tr className="table-headers">
+          //       {currentFile.data.headers.map((header: string) => (
+          //         <td>{header}</td>
+          //       ))}
+          //     </tr>
+          //   </thead>
+          //   <tbody>
+          //     {currentFile.data.body.map((stringArr: string[]) => (
+          //       <tr>
+          //         {stringArr.map((str: string) => (
+          //           <td>{str}</td>
+          //         ))}
+          //       </tr>
+          //     ))}
+          //   </tbody>
+          // </table>
+
+        // const props: ViewProps = {
+        //   currentFile: currentFile
+        // };
+        //   loadCSV(props);
         );
-
-        // currentFile.data.body.map((stringArr: string[]) => {
-        //   //looping through list of lists
-        //   //let tempStr = "";
-        //   stringArr.map((str: string) => {
-        //     //tempStr += str + ", ";
-        //     <td>{str}</td>;
-        //   });
-        //   // body.push(tempStr.substring(0, tempStr.length - 2));
-        //   // tempStr = "";
-
-        //   return <tr>{cells}</tr>;
-        // });
-
-        // console.log(<table>{rows}</table>);
-        //newCommands.push(<table>{rows}</table>);
-        // body.forEach((str: string) => {
-        //   newCommands.push(<tr>{str}</tr>);
-        // });
       }
     } else if (usage === "search") {
       if (inputLength > 3 || inputLength == 1) {
@@ -109,17 +99,12 @@ export default function REPL() {
         newCommands.push(searchCSV(props));
       }
     } else if (usage == "load_file") {
-      const fileName = splitInput[1];
-      if (
-        mockedJson(fileName).data.headers.length === 0 &&
-        mockedJson(fileName).data.body.length === 0
-      ) {
-        newCommands.push(<div>Failed to load file.</div>);
-      } else {
-        setCurrentFile(mockedJson(fileName));
-        setFileLoaded(true);
-        newCommands.push(<div>{fileName} successfully loaded!</div>);
-      }
+      const props: LoadProps = {
+        fileName: splitInput[1],
+        setCurrentFile: setCurrentFile,
+        setFileLoaded: setFileLoaded,
+      };
+      newCommands.push(loadCSV(props));
     } else {
       newCommands.push(<div>Unknown command was inputted.</div>);
     }
@@ -140,9 +125,9 @@ export default function REPL() {
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
       {/* Update your REPLHistory and REPLInput to take in new shared state as props */}
-      <div className="mode">
+      <div className="mode" aria-label="Mode-Header">
         Mode:
-        <button className="mode" onClick={handleMode}>
+        <button className="mode" onClick={handleMode} aria-label="Mode">
           {mode}
         </button>
       </div>

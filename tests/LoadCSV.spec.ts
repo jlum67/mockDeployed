@@ -9,9 +9,10 @@ import { test, expect } from "@playwright/test";
  */
 
 // If you needed to do something before every test case...
-test.beforeEach(() => {
+test.beforeEach(async ({ page }) => {
   // ... you'd put it here.
   // TODO: Is there something we need to do before every test case to avoid repeating code?
+  await page.goto("http://localhost:8000/");
 });
 
 /**
@@ -20,16 +21,19 @@ test.beforeEach(() => {
  * you put before parts of your test that might take time to run,
  * like any interaction with the page.
  */
-test("on page load, i see an input bar", async ({ page }) => {
+test("on page load, i see a header", async ({ page }) => {
   // Notice: http, not https! Our front-end is not set up for HTTPs.
-  await page.goto("http://localhost:8000/");
   await expect(page.getByLabel("Command input")).toBeVisible();
+  await expect(page.getByRole("heading")).toBeVisible();
+  await expect(page.getByRole("heading")).toBeVisible();
+
+  await expect(page.getByLabel("Mode-Header")).toHaveValue("Mode:");
+  await expect(page.getByLabel("Mode")).toHaveValue("Brief");
+  await page.getByLabel("Mode").click();
+  await expect(page.getByLabel("Mode")).toHaveValue("Verbose");
 });
 
 test("after I type into the input box, its text changes", async ({ page }) => {
-  // Step 1: Navigate to a URL
-  await page.goto("http://localhost:8000/");
-
   // Step 2: Interact with the page
   // Locate the element you are looking for
   await page.getByLabel("Command input").click();
@@ -40,6 +44,8 @@ test("after I type into the input box, its text changes", async ({ page }) => {
   const mock_input = `Awesome command`;
   await expect(page.getByLabel("Command input")).toHaveValue(mock_input);
 });
+
+// TODO: 1) test w invalid file name, test w valid file name, test w invalid command
 
 test("on page load, i see a button", async ({ page }) => {
   // TODO WITH TA: Fill this in!

@@ -16,14 +16,14 @@ export function REPLHistory(props: REPLHistoryProps) {
     (value: { input: string; output: JSX.Element }) => {
       if (mode === "Verbose") {
         return (
-          <div className="command" key={value.input}>
+          <div aria-label="command" className="command" key={value.input}>
             <div>Command: {value.input}</div>
             <div>Output: {value.output}</div>
           </div>
         );
       } else {
         return (
-          <div className="command" key={value.input}>
+          <div aria-label="command" className="command" key={value.input}>
             <div>{value.output}</div>
           </div>
         );

@@ -35,21 +35,6 @@ export function searchCSV(props: SearchProps) {
     return <div>{out}</div>;
 
   } else {
-
-      // searchOutput.forEach((stringArr: string[]) => {
-      //   //looping through list of lists
-      //   let tempStr = "";
-      //   stringArr.forEach((str: string) => {
-      //     tempStr += str + ", ";
-      //   });
-      //   body.push(tempStr.substring(0, tempStr.length - 2));
-      //   tempStr = "";
-      // });
-
-      // body.forEach((str: string) => {
-      //   out.push(<div>{str}</div>);
-      // });
-
       return (
         <table>
           <tbody>
@@ -63,10 +48,5 @@ export function searchCSV(props: SearchProps) {
           </tbody>
         </table>
       );
-  }
-
-
-
-  // return <div>{out}</div>;
-   
+  }   
 }

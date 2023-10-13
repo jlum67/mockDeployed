@@ -112,6 +112,13 @@ export default function mockedJson(fileName: string) {
         body: [["herro"]],
       },
     };
+  } else if (fileName === "empty") {
+    return {
+      data: {
+        headers: [],
+        body: [[]],
+      },
+    };
   }
 
   return {

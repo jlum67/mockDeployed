@@ -1,19 +1,23 @@
+
 import { test, expect } from "@playwright/test";
 import mockedJson from "../src/modules/mockedJson";
 
-/**
-  The general shapes of tests in Playwright Test are:
-    1. Navigate to a URL
-    2. Interact with the page
-    3. Assert something about the page against your expectations
-  Look for this pattern in the tests below!
- */
+// // If you needed to do something before every test case...
+// test.beforeEach(async ({ page }) => {
+//   // ... you'd put it here.
+//   await page.goto("http://localhost:8000/");
+// });
 
-// If you needed to do something before every test case...
-test.beforeEach(async ({ page }) => {
-  // ... you'd put it here.
-  await page.goto("http://localhost:8000/");
-});
+// test("on brief mode, I can load and view a file with headers", async ({
+//   page,
+// }) => {
+//   await page.getByLabel("Command input").click();
+//   await page.getByLabel("Command input").fill("load_file file1");
+//   await page.getByRole("button", { name: "Submit" }).click();
+//   await expect(page.getByText("file1 successfully loaded!")).toBeVisible;
+//   await page.getByLabel("Command input").click();
+//   await page.getByLabel("Command input").fill("view");
+
 
 /**
  * Tests that we can load and view a file with headers in brief mode
@@ -29,8 +33,12 @@ test("on brief mode, I can load and view a file with headers", async ({
   await page.getByLabel("Command input").fill("view");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  const headers = mockedJson("file1").data.headers;
-  const body = mockedJson("file1").data.body;
+
+//   for (let i = 0; i < rowValues.length; i++) {
+//     await expect(page.getByText(rowValues[i])).toBeVisible;
+//   }
+// });
+
 
   for (let i = 0; i < headers.length; i++) {
     await expect(page.getByText(headers[i], { exact: true }).isVisible)
